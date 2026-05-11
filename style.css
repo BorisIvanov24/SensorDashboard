@@ -1,41 +1,218 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080b10;
+  --surface: #0e1420;
+  --border: #1e2a3a;
+  --accent-temp: #ff6b35;
+  --accent-hum: #38bdf8;
+  --text: #e2e8f0;
+  --muted: #4a5568;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
 body {
-  margin: 0;
-  font-family: Arial;
-  background: #0f0f14;
-  color: white;
-  text-align: center;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-display);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle dot grid background */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #1e2a3a 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HEADER */
+header {
+  position: relative;
+  z-index: 1;
+  padding: 56px 40px 36px;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 h1 {
-  margin-top: 30px;
-  color: #00ffcc;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
 }
 
+.accent {
+  color: var(--accent-temp);
+  position: relative;
+}
+
+.accent::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-temp);
+  opacity: 0.35;
+}
+
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+  letter-spacing: 0.1em;
+}
+
+/* MAIN */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* CARDS */
 .cards {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
-  margin-top: 30px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 520px) {
+  .cards { grid-template-columns: 1fr; }
 }
 
 .card {
-  background: #1c1c26;
-  padding: 20px;
-  border-radius: 12px;
-  width: 200px;
-  box-shadow: 0 0 10px black;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 28px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: #2e3e52;
+}
+
+#card-temp { border-top: 3px solid var(--accent-temp); }
+#card-hum  { border-top: 3px solid var(--accent-hum); }
+
+/* glow blob behind value */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.07;
+  pointer-events: none;
+}
+#card-temp::before { background: var(--accent-temp); }
+#card-hum::before  { background: var(--accent-hum); }
+
+.card-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 16px;
 }
 
 .value {
-  font-size: 40px;
-  color: #00ffcc;
-  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
-.chart-box {
-  width: 80%;
-  margin: 50px auto;
-  background: #1c1c26;
-  padding: 20px;
-  border-radius: 12px;
+#card-temp .value { color: var(--accent-temp); }
+#card-hum  .value { color: var(--accent-hum); }
+
+.unit {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.1em;
+}
+
+.updated-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  letter-spacing: 0.05em;
+}
+
+/* CHART SECTION */
+.chart-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px 28px;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.chart-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 280px;
 }

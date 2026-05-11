@@ -1,34 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="bg">
 <head>
-  <title>Boris Room Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Стаята на Борис</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>Temperature and humidity in Boris' room</h1>
+  <div class="bg-grid"></div>
 
-<div class="cards">
+  <header>
+    <div class="header-inner">
+      <div class="header-label">МОНИТОРИНГ НА СТАЯТА</div>
+      <h1>Стаята на <span class="accent">Борис</span></h1>
+      <p class="subtitle">Температура &amp; Влажност · На живо</p>
+    </div>
+  </header>
 
-  <div class="card">
-    <h2>Temperature</h2>
-    <div id="temp" class="value">-- °C</div>
-  </div>
+  <main>
 
-  <div class="card">
-    <h2>Humidity</h2>
-    <div id="hum" class="value">-- %</div>
-  </div>
+    <section class="cards">
 
-</div>
+      <div class="card" id="card-temp">
+        <div class="card-tag">🌡 ТЕМПЕРАТУРА</div>
+        <div id="temp" class="value">--</div>
+        <div class="unit">°C</div>
+        <div class="updated-label">Обновено: <span id="temp-ago">—</span></div>
+      </div>
 
-<div class="chart-box">
-  <canvas id="chart"></canvas>
-</div>
+      <div class="card" id="card-hum">
+        <div class="card-tag">💧 ВЛАЖНОСТ</div>
+        <div id="hum" class="value">--</div>
+        <div class="unit">%</div>
+        <div class="updated-label">Обновено: <span id="hum-ago">—</span></div>
+      </div>
 
-<script src="app.js"></script>
+    </section>
 
+    <section class="chart-section">
+      <div class="chart-header">
+        <span class="chart-title">История на данните</span>
+        <span class="chart-badge">последни 8000 записа</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
