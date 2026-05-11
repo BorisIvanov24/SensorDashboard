@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ESP32 Dashboard</title>
+  <title>Boris Room Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<div class="container">
+<h1>Temperature and humidity in Boris' room</h1>
 
-  <h1>🌡 ESP32 IoT Dashboard</h1>
+<div class="cards">
 
   <div class="card">
     <h2>Temperature</h2>
@@ -21,8 +22,10 @@
     <div id="hum" class="value">-- %</div>
   </div>
 
-  <p class="status">Live data from ThingSpeak</p>
+</div>
 
+<div class="chart-box">
+  <canvas id="chart"></canvas>
 </div>
 
 <script src="app.js"></script>
